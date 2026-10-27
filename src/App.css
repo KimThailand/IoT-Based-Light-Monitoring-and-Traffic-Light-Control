@@ -1,0 +1,308 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;500&display=swap");
+
+:root {
+  --mist: #fdf6e8;
+  --ink: #3b2f15;
+  --muted: #8a7a55;
+  --tube: #ecdfb8;
+  --mercury: #f2a900;
+  --ok: #1f7a5c;
+  --warn: #9a5b00;
+  --bad: #b3261e;
+  --gauge-h: 260px;
+
+  --red: #d6303f;
+  --yellow: #f2b705;
+  --green: #1f9d55;
+  --off: #d9d2bd;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--mist);
+  color: var(--ink);
+  font-family: "IBM Plex Sans Thai", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.stage {
+  min-height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: clamp(24px, 5vw, 56px);
+  padding: 32px 24px;
+}
+
+.panel {
+  background: #fff;
+  border-radius: 20px;
+  padding: 28px 32px;
+  box-shadow: 0 4px 20px rgba(59, 47, 21, 0.08);
+  min-width: 280px;
+}
+
+/* ---------- Light Gauge ---------- */
+.thermo-row {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.thermo {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.scale {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: var(--gauge-h);
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: right;
+}
+
+.gauge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tube {
+  position: relative;
+  width: 24px;
+  height: var(--gauge-h);
+  background: var(--tube);
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
+}
+
+.mercury {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--mercury);
+  box-shadow: 0 0 14px rgba(242, 169, 0, 0.55);
+  transition: height 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.bulb {
+  width: 54px;
+  height: 54px;
+  margin-top: -8px;
+  border-radius: 50%;
+  background: var(--mercury);
+  box-shadow: 0 0 18px rgba(242, 169, 0, 0.5);
+}
+
+.thermo.empty .bulb {
+  background: var(--tube);
+  box-shadow: none;
+}
+
+.readout h1 {
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.temp {
+  margin: 0;
+  font-size: clamp(44px, 8vw, 72px);
+  font-weight: 300;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.temp span {
+  margin-left: 6px;
+  font-size: 0.32em;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.meta {
+  margin: 6px 0 0;
+  min-height: 1.4em;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* ---------- Traffic Light Control ---------- */
+.traffic-panel {
+  text-align: center;
+}
+
+.traffic-panel h1 {
+  margin: 0 0 20px;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.traffic-lamp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  background: #232323;
+  padding: 18px;
+  border-radius: 16px;
+  width: fit-content;
+  margin: 0 auto 16px;
+}
+
+.lamp {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--off);
+  opacity: 0.35;
+  transition: all 0.3s ease;
+}
+
+.lamp.red.active {
+  background: var(--red);
+  opacity: 1;
+  box-shadow: 0 0 18px rgba(214, 48, 63, 0.8);
+}
+
+.lamp.yellow.active {
+  background: var(--yellow);
+  opacity: 1;
+  box-shadow: 0 0 18px rgba(242, 183, 5, 0.8);
+}
+
+.lamp.green.active {
+  background: var(--green);
+  opacity: 1;
+  box-shadow: 0 0 18px rgba(31, 157, 85, 0.8);
+}
+
+.current-color {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 8px 0 20px;
+}
+
+.current-color[data-color="RED"] {
+  color: var(--red);
+}
+
+.current-color[data-color="YELLOW"] {
+  color: var(--warn);
+}
+
+.current-color[data-color="GREEN"] {
+  color: var(--green);
+}
+
+.traffic-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.btn {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0.75;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  opacity: 1;
+}
+
+.btn.active {
+  opacity: 1;
+  outline: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.btn.red {
+  background: var(--red);
+}
+
+.btn.yellow {
+  background: var(--yellow);
+  color: #3b2f15;
+}
+
+.btn.green {
+  background: var(--green);
+}
+
+/* ---------- Status ---------- */
+.status {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 8px 0 0;
+  font-size: 0.9rem;
+}
+
+.status::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status[data-state="connected"] {
+  color: var(--ok);
+}
+
+.status[data-state="connecting"],
+.status[data-state="reconnecting"] {
+  color: var(--warn);
+}
+
+.status[data-state="offline"],
+.status[data-state="error"] {
+  color: var(--bad);
+}
+
+@media (max-width: 560px) {
+  :root {
+    --gauge-h: 180px;
+  }
+
+  .panel {
+    padding: 20px;
+  }
+
+  .thermo-row {
+    gap: 16px;
+  }
+
+  .bulb {
+    width: 44px;
+    height: 44px;
+  }
+}
